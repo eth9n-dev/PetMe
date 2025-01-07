@@ -3,12 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {
-    "install": "npm install --force --prefix ./frontend && npm install --force --prefix ./backend",
-    "start": "concurrently \"npm run start:frontend\" \"npm run start:backend\"",
-    "start:frontend": "npm --prefix ./frontend start",
-    "start:backend": "npm --prefix ./backend start"
-  },
   "keywords": [],
   "author": "",
   "license": "ISC",
