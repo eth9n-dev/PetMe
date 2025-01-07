@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import Login from "./login";
-import { gapi } from "gapi-script";
 import Logout from "./logout";
 import BreedsList from "./BreedsList";
 import { Cloudinary } from "@cloudinary/url-gen";
@@ -24,27 +23,20 @@ function App() {
   ]);
   const [searchedBreeds, setSearchedBreeds] = useState([]);
   const [searching, setSearching] = useState(false);
-
   const cld = new Cloudinary({
     cloud: { cloudName: process.env.REACT_APP_CLOUD_NAME },
   });
   const breedRef = useRef([]);
 
-  useEffect(() => {
-    function start() {
-      gapi.client
-        .init({
-          clientId: clientId,
-          scope: "profile email",
-        })
-        .then(() => {
-          gapi.auth2.getAuthInstance().isSignedIn.listen(updateUser);
-          updateUser(gapi.auth2.getAuthInstance().isSignedIn.get());
-        });
-    }
+  const setProfile = (userData) => {
+    console.log("User data received: " + userData.email);
+    setUser(userData.email);
+  };
 
-    gapi.load("client:auth2", start);
-  }, []);
+  function logOut() {
+    setUser(null);
+    setUserBreeds([]);
+  }
 
   useEffect(() => {
     const handleResize = () => {
@@ -80,23 +72,15 @@ function App() {
     }
   };
 
-  const updateUser = (isSignedIn) => {
-    if (isSignedIn) {
-      const user = gapi.auth2.getAuthInstance().currentUser.get();
-      const profile = user.getBasicProfile();
-      const email = profile.getEmail();
-
-      setUser(email);
-
+  useEffect(() => {
+    if (user) {
+      const email = user;
       axios
         .get(`http://localhost:5000/user/${email}`)
         .then((response) => setUserBreeds(response.data))
         .catch((error) => console.log(error));
-    } else {
-      setUser(null);
-      setUserBreeds([]);
     }
-  };
+  }, [user]);
 
   function pettedFilterToggle() {
     setPettedFilter((prev) => {
@@ -160,7 +144,7 @@ function App() {
           <a class="navLinks" href="/">
             🐾 PetMe
           </a>
-          {user ? <Logout /> : <Login />}
+          {user ? <Logout onLogoutSuccess={logOut} /> : <Login onLoginSuccess={setProfile} />}
         </div>
         <div class="Categories">
           <button class="button-23" onClick={toggleClearFilters}>
@@ -192,7 +176,8 @@ function App() {
         </div>
       ) : (
         <div class="Welcome">
-          <h1>Sign in to start your collection!</h1> <br /> <Login />
+          <h1>Sign in to start your collection!</h1> <br />{" "}
+          <Login onLoginSuccess={setProfile} />
         </div>
       )}
     </>
