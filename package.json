@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "install": "npm install --prefix ./frontend && npm install --prefix ./backend",
+    "install": "npm install --force --prefix ./frontend && npm install --force --prefix ./backend",
     "start": "concurrently \"npm run start:frontend\" \"npm run start:backend\"",
     "start:frontend": "npm --prefix ./frontend start",
     "start:backend": "npm --prefix ./backend start"
