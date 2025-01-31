@@ -9,6 +9,10 @@ Main Page View:
 
 ![Main Page](./MainPage.png)
 
+Start tracking:
+
+![Start Tracking](./TrackBreeds.gif)
+
 # Features
 - Track Dog Breeds: Easily track any breed of dog you've owned or interacted with.
 - Breed Information: View breed-specific details pulled from a reliable API.
