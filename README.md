@@ -1,5 +1,5 @@
 # PetMe
-A simple Node.js and React application that allows users to track and manage a collection of all the dog breeds they've ever owned or interacted with. The app lets users add, update, and view their dog breed collection in a clean and intuitive interface. It provides breed information and allows users to store their personal experiences and notes about each breed.
+A simple Node.js and React application that allows users to track and manage a collection of all the dog breeds they've ever owned or interacted with. The app lets users add, update, and view their dog breed collection in a clean and intuitive interface. It provides breed information and allows users to share their personal list with others!
 # Demo
 Sign in with Google OAuth:
 
